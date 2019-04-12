@@ -1,7 +1,5 @@
 package com.example.radioviewer.view;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.radioviewer.R;
 import com.example.radioviewer.model.Channel;
@@ -58,7 +57,7 @@ public class ChannelDetails extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_channel_details, container, false);
-
+        Toast.makeText(view.getContext(), "GOT HERE", Toast.LENGTH_LONG).show();
         title = view.findViewById(R.id.tv_title_details);
         dj = view.findViewById(R.id.tv_dj_details);
         djEmail = view.findViewById(R.id.tv_dj_email_details);

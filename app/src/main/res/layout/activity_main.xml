@@ -7,6 +7,18 @@
     tools:context=".view.MainActivity">
 
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.RecyclerView>
+
     <FrameLayout
         android:id="@+id/fragment_placeholder"
         android:layout_width="match_parent"
@@ -18,15 +30,4 @@
 
     </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-    </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

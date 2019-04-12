@@ -1,6 +1,7 @@
 package com.example.radioviewer.view;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,11 @@ public class RadioRecyclerAdapter extends
         RecyclerView.Adapter<RadioRecyclerAdapter.RadioViewHolder> {
 
     private MusicList data;
+    private MainViewContract mainView;
 
-    public RadioRecyclerAdapter(MusicList data) {
+    public RadioRecyclerAdapter(MusicList data, MainViewContract mainView) {
         this.data = data;
+        this.mainView = mainView;
     }
 
     @NonNull
@@ -38,6 +41,8 @@ public class RadioRecyclerAdapter extends
         radioViewHolder.title.setText(ch.getTitle());
         radioViewHolder.dj.setText(ch.getDj());
 
+        radioViewHolder.rootView.setOnClickListener(view -> mainView.showDetails(ch));
+
         Picasso.get().load(ch.getImage()).into(radioViewHolder.imageView);
     }
 
@@ -50,6 +55,7 @@ public class RadioRecyclerAdapter extends
 
         ImageView imageView;
         TextView title, dj, description;
+        View rootView;
 
         public RadioViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +64,7 @@ public class RadioRecyclerAdapter extends
             title = itemView.findViewById(R.id.tv_title_item);
             dj = itemView.findViewById(R.id.tv_dj_item);
             description = itemView.findViewById(R.id.tv_description_item);
+            rootView = itemView;
         }
     }
 }
