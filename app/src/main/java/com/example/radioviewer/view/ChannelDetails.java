@@ -1,5 +1,7 @@
 package com.example.radioviewer.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -73,6 +75,16 @@ public class ChannelDetails extends Fragment {
 
         Picasso.get().load(channel.getXlimage()).into(imageView);
 
+        view.setOnClickListener(v -> playStation());
+
         return view;
+    }
+
+    private void playStation() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(channel.getPlaylists().get(0).getUrl()));
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }

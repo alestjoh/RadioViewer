@@ -19,8 +19,6 @@ import com.example.radioviewer.presenter.MainPresenterContract;
 
 public class MainActivity extends AppCompatActivity implements MainViewContract {
 
-    private static final String FRAGMENT_BOOLEAN = "is there a fragment here already?";
-
     private RecyclerView recyclerView;
     private MainPresenterContract presenter;
     private boolean fragmentPresent = false;

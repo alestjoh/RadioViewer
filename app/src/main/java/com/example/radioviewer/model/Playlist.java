@@ -3,7 +3,7 @@ package com.example.radioviewer.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class Playlist {
+public class Playlist {
     @SerializedName("url")
     @Expose
     private String url;
