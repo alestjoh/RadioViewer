@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
         presenter.initRetrofit();
         presenter.requestMusicList();
 
-        ActionBar actionBar = getSupportActionBar();
+        //ActionBar actionBar = getSupportActionBar();
     }
 
     @Override
@@ -43,4 +43,6 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
     public void onError(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
+
+
 }
