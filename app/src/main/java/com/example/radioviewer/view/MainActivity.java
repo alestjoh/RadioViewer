@@ -19,8 +19,11 @@ import com.example.radioviewer.presenter.MainPresenterContract;
 
 public class MainActivity extends AppCompatActivity implements MainViewContract {
 
+    private static final String FRAGMENT_BOOLEAN = "is there a fragment here already?";
+
     private RecyclerView recyclerView;
-    MainPresenterContract presenter;
+    private MainPresenterContract presenter;
+    private boolean fragmentPresent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,12 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
         presenter = new MainPresenter(this);
         presenter.initRetrofit();
         presenter.requestMusicList();
+
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0)
+                fragmentPresent = false;
+        });
+
 
         //ActionBar actionBar = getSupportActionBar();
     }
@@ -50,13 +59,18 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
 
     @Override
     public void showDetails(Channel channel) {
+        if (fragmentPresent) {
+            return;
+        }
+
         FragmentManager fragmentManager = getSupportFragmentManager();
+        ChannelDetails chan = ChannelDetails.newInstance(channel);
 
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_placeholder, ChannelDetails.newInstance(channel))
-                .addToBackStack("Details")
+                .add(R.id.fragment_placeholder, chan)
+                .addToBackStack(null)
                 .commit();
+
+        fragmentPresent = true;
     }
-
-
 }
