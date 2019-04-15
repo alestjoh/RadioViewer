@@ -1,5 +1,6 @@
 package com.example.radioviewer.view;
 
+import android.animation.ObjectAnimator;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +13,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.radioviewer.R;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
     private MainPresenterContract presenter;
     private boolean fragmentPresent = false;
     private String query = null;
+    private FrameLayout fragmentHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +49,26 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
         recyclerView = findViewById(R.id.recycler_view_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        fragmentHolder = findViewById(R.id.fragment_placeholder);
+
         presenter = new MainPresenter(this);
         presenter.initRetrofit();
         presenter.requestMusicList();
 
+        ObjectAnimator initAnim = ObjectAnimator.ofFloat(
+                fragmentHolder, "translationX", 1000f);
+        initAnim.setDuration(5);
+        initAnim.start();
+
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
-            if (getSupportFragmentManager().getBackStackEntryCount() == 0)
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
                 fragmentPresent = false;
+
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(
+                        fragmentHolder, "translationX", 1000f);
+                objectAnimator.setDuration(500);
+                objectAnimator.start();
+            }
         });
 
         Intent intent = getIntent();
@@ -112,6 +130,19 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         ChannelDetails chan = ChannelDetails.newInstance(channel);
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(
+                fragmentHolder, "translationX", 0f);
+        objectAnimator.setDuration(500);
+        objectAnimator.start();
+
+        //ObjectAnimator exitAnim = ObjectAnimator.ofFloat(
+        //        fragmentHolder, "translationX", 600f);
+        //exitAnim.setDuration(500);
+
+        //chan.setExitTransition(exitAnim);
+
+        //chan.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
 
         fragmentManager.beginTransaction()
                 .add(R.id.fragment_placeholder, chan)
