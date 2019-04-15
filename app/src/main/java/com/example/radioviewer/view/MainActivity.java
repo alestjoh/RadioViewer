@@ -1,24 +1,18 @@
 package com.example.radioviewer.view;
 
-import android.animation.ObjectAnimator;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -55,19 +49,9 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
         presenter.initRetrofit();
         presenter.requestMusicList();
 
-        ObjectAnimator initAnim = ObjectAnimator.ofFloat(
-                fragmentHolder, "translationX", 1000f);
-        initAnim.setDuration(5);
-        initAnim.start();
-
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
                 fragmentPresent = false;
-
-                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(
-                        fragmentHolder, "translationX", 1000f);
-                objectAnimator.setDuration(500);
-                objectAnimator.start();
             }
         });
 
@@ -131,20 +115,8 @@ public class MainActivity extends AppCompatActivity implements MainViewContract 
         FragmentManager fragmentManager = getSupportFragmentManager();
         ChannelDetails chan = ChannelDetails.newInstance(channel);
 
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(
-                fragmentHolder, "translationX", 0f);
-        objectAnimator.setDuration(500);
-        objectAnimator.start();
-
-        //ObjectAnimator exitAnim = ObjectAnimator.ofFloat(
-        //        fragmentHolder, "translationX", 600f);
-        //exitAnim.setDuration(500);
-
-        //chan.setExitTransition(exitAnim);
-
-        //chan.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
-
         fragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_right, R.anim.slide_in_from_right, R.anim.slide_out_right)
                 .add(R.id.fragment_placeholder, chan)
                 .addToBackStack(null)
                 .commit();
